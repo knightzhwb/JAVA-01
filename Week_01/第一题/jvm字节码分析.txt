@@ -1,0 +1,136 @@
+E:\java\homework>javap -c -verbose E:\java\homework\hello.class
+Classfile /E:/java/homework/hello.class
+  Last modified 2021-1-12; size 451 bytes
+  MD5 checksum 55831f46135b8435f81f63452a54773e
+  Compiled from "hello.java"
+public class hello
+  minor version: 0
+  major version: 52
+  flags: ACC_PUBLIC, ACC_SUPER
+Constant pool:
+   #1 = Methodref          #5.#16         // java/lang/Object."<init>":()V
+   #2 = Double             4.0d
+   #4 = Class              #17            // hello
+   #5 = Class              #18            // java/lang/Object
+   #6 = Utf8               <init>
+   #7 = Utf8               ()V
+   #8 = Utf8               Code
+   #9 = Utf8               LineNumberTable
+  #10 = Utf8               main
+  #11 = Utf8               ([Ljava/lang/String;)V
+  #12 = Utf8               StackMapTable
+  #13 = Class              #19            // "[Ljava/lang/String;"
+  #14 = Utf8               SourceFile
+  #15 = Utf8               hello.java
+  #16 = NameAndType        #6:#7          // "<init>":()V
+  #17 = Utf8               hello
+  #18 = Utf8               java/lang/Object
+  #19 = Utf8               [Ljava/lang/String;
+{
+  public hello();
+    descriptor: ()V
+    flags: ACC_PUBLIC
+    Code:
+      stack=1, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: return
+      LineNumberTable:
+        line 1: 0
+
+  public static void main(java.lang.String[]);
+    descriptor: ([Ljava/lang/String;)V
+    flags: ACC_PUBLIC, ACC_STATIC
+    Code:
+      stack=4, locals=13, args_size=1
+ 	//bipush 命令将for循环的上限值8入栈
+         0: bipush        8
+	//偏移2~8 将a,b,c初始化
+         2: istore_1
+         3: iconst_2
+         4: istore_2
+         5: ldc2_w        #2                  // double 4.0d
+         8: dstore_3
+	//偏移9~12,加法计算
+	//a,b从局部变量中入栈
+         9: iload_1
+        10: iload_2
+	//a+b
+        11: iadd
+	//a+b的结果存入局部变量表5的位置，result1
+        12: istore        5
+	//偏移14~18，减法计算
+	//a入栈
+        14: iload_1
+	//转换成double类型
+        15: i2d
+	//c入栈
+        16: dload_3
+	//a-c
+        17: dsub
+	//结果存入局部变量表第6的位置，result2，double型占两个字节
+        18: dstore        6
+	//乘除法，类似
+        20: iload_1
+        21: i2d
+        22: dload_3
+        23: dmul
+        24: dstore        8
+        26: iload_1
+        27: iload_2
+        28: idiv
+        29: istore        10
+	//在局部变量表11的位置存了一个0，这是sum变量
+        31: iconst_0
+        32: istore        11
+	//在局部变量表12的位置存了一个0，这是for循环起始的i变量
+        34: iconst_0
+	//i入栈
+        35: istore        12
+        37: iload         12
+	//
+        39: iload_1
+	//比较操作，比较栈顶两int类型值即变量i和a，若iload 12入栈的值大于等于bipush入栈的值，后则跳转至偏移59的位置
+        40: if_icmpge     59
+	//i%b
+        43: iload         12
+        45: iload_2
+	//取模
+        46: irem
+	//判断，栈顶int类型值不为0则跳转至偏移53的位置，否则执行接下来的iinc命令
+        47: ifne          53
+	//sum+1
+        50: iinc          11, 1
+	//i+1
+        53: iinc          12, 1
+	// 跳转至偏移37的位置，进行下一次循环
+        56: goto          37
+	//sum存入result5
+        59: iload         11
+        61: istore        12
+        63: return
+      LineNumberTable:
+        line 3: 0
+        line 4: 3
+        line 5: 5
+        line 6: 9
+        line 7: 14
+        line 8: 20
+        line 9: 26
+        line 11: 31
+        line 12: 34
+        line 13: 43
+        line 14: 50
+        line 12: 53
+        line 17: 59
+        line 18: 63
+      StackMapTable: number_of_entries = 3
+        frame_type = 255 /* full_frame */
+          offset_delta = 37
+          locals = [ class "[Ljava/lang/String;", int, int, double, int, double, double, int, int, int ]
+          stack = []
+        frame_type = 15 /* same */
+        frame_type = 250 /* chop */
+          offset_delta = 5
+}
+SourceFile: "hello.java"
