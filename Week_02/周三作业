@@ -1,0 +1,63 @@
+1、使用 GCLogAnalysis.java 自己演练一遍串行/并行/CMS/G1的案例。
+
+SerialGC日志分析：
+java -XX:+UseSerialGC -Xmx256m -Xms256m -XX:+PrintGCDetails -XX:+PrintGCDateStamps GCLogAnalysis
+分别测压256m，512m,1g,2g,4g,8g
+1）256m的时候oom,
+  Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+        at GCLogAnalysis.generateGarbage(GCLogAnalysis.java:48)
+        at GCLogAnalysis.main(GCLogAnalysis.java:25)
+2）程序运行总时长：256m时，程序开始20:48:04.300~fullGC循环的第一次20:48:04.460大概0.16秒，其他均为1s左右，值得一提，8g时只有一次youngGC，但时长0.1s
+3）程序最后生成对象总数:256m时为4951，512m时11266，1g14378，2g14813，4g15160，8g14056。
+总结：256m时，younggc比较频繁，会有连续几次fullgc,甚至是出现内存溢出情况，生成对象数在4000多。
+	 1g,2g,4g时只有younggc，生成对象数变化不大，但是8g对象数反而减小了，说明串行GC设置堆内存不是越大就越好，
+   应该根据实际业务情况中主要业务接口进行压测来调整堆内存大小和young区大小，防止过早提升。
+   对于测试程序如果使用串行GC，最优堆内存大小是1g,符合既能保证业务正常，又使用最小内存，节省资源。
+
+ParallelGC日志分析：
+java -XX:+UseParallelGC -Xmx256m -Xms256m -XX:+PrintGCDetails -XX:+PrintGCDateStamps GCLogAnalysis
+分别测压256m，512m,1g,2g,4g,8g
+1)256m的时候再次oom.
+21:13:20.924~21:13:21.043 运行了0.1s多一点之后全是fullGc了
+2)256M时出现oom报错，512m时9570,1g时16344，2g17317和4g时16207,8g时会下降到15307
+总结：1g，2g和4g时吞吐量最大但比串行要多出2000左右。总体暂停时间也比串行要少。但是出现偶然情况512m时0.5s左右之后频繁fullGc，数据反而低于串行，
+多次试验该情况均出现，生成对象数为9000~11000之间。
+串行gc时如果代码没有问题就要看看是否堆内存分配足够空间。
+
+
+CMSGC日志分析：
+java -XX:+UseConcMarkSweepGC -Xmx256m -Xms256m -XX:+PrintGCDetails -XX:+PrintGCDateStamps GCLogAnalysis
+分别测压256m，512m,1g,2g,4g,8g 
+
+1）生成对象数：256m->4669,512m->11706，1g->15803，2g->15082，4g->15901，8g->15207
+2）-XX:+PrintGCDateStamps打印的日志细节看，CMSGC时，因为是并发，与程序同时运行，1g~4g吞吐量徘徊在15000左右，没有并行GC大。
+但是GC停顿时间短(init,final)，最大耗时是younggc，所以对延迟有要求可以。
+3）应该适当提高young区大小，可以设置初始值：-XX：NewSize
+  
+G1GC日志分析：
+java -XX:+UseG1GC -Xmx256m -Xms256m -XX:+PrintGCDetails -XX:+PrintGCDateStamps GCLogAnalysis
+分别测压256m，512m,1g,2g,4g,8g,12g,14g
+
+1）生成对象数：256m->oom，512m->12456,1G->17735,2G->17136,4g->19590,8G->19873,12g->19715,14g->19412
+2）G1GC比较适用于大内存，因为只到8g无法确定峰值，特地多测两组，可以看到测试数据中8G达到峰值对象数。
+3）GC暂停时间比较短，吞吐量在堆内存比较小的时候吞吐量不如并行，但大内存下稳定达到19000左右接近20000
+
+2、使用压测工具（wrk或sb），演练gateway-server-0.0.1-SNAPSHOT.jar示例。
+启动程序：java -Xmx1g -Xms1g -XX:-UseAdaptiveSizePolicy -XX:+UseG1GC -XX:MaxGCPauseMillis=50  -XX:+PrintGC  -jar gateway-server-0.0.1-SNAPSHOT.jar
+测压：sb -u http://localhost:8088/api/hello -c 10 -n 40
+
+4、(必做)根据上述自己对于1和2的演示，写一段对于不同GC和堆内存的总结，提交到 github。
+
+结论：
+	1.题目1中256M内存下，四种GC模式全部阵亡，1G内存比512M内存在对象生成量上有2-3倍的提升，课件堆内存不能太小，会对性能产生影响甚至OOM；
+  也不能太大，否则要么牺牲单次GC时间，要么牺牲累积GC时间（影响吞吐）；经过压测才能寻找到最合适的内存大小。
+  现实工作中要对系统的jvm调优，需要根据系统流量最大的几个api进行压测，同时打印GC日志，再分析GC日志， 再根据日志情况调整参数，
+  包括堆内存大小，是否启动自适应，收集器类型，新生代大小， 并行收集的线程数， 对象升代的阈值等)， 再压测， 记录， 分析，直到最终确定最优的JVM参数。
+  2.题目2中无论采取什么GC，在1g情况下启动服务都会出现GC情况，说明启动初始化代码中有大量对象或者大对象生成，导致young区空间不够而过早提升到老年代。
+  对于所有的GC，都要设置最大堆内存大小，并且为了JVM频繁扩容影响性能，同时也会同时设置初始堆内存大小， 即-Xmx和-Xms；
+  设置初始MetaSpace的大小和最大大小，因为应用启动时加载类会消耗较多MetaSpace空间，而初始MetaSpace空间大小一般较小，所以JVM会在应用启动的时候执行几次FULLGC为Metaspace扩容，
+  在一开始设置好MetaSpace的初始大小能够加快应用的启动， 同时如果系统中使用了大量的动态代理，要适当的加大Metaspace的空间，防止元数据区溢出。
+  3.设置合理的升代年龄阈值和大对象的标准， 年龄阈值太小， 会导致老年代中出现生命周期很短的对象，MajorGC过于频繁；太大，则会导致新生代回收效率不对于除G1GC以外的其他GC， 要设置合理的新生代大小（-Xmn），新生代太小， 会导致新生代频繁GC，浪费性能，如果新生代太大，则一次新生代GC的时间过长，并且老年代会容易满。
+  对于ParallelGC以后的GC， 要合理设置ParallelGCThreads的大小， 该参数表示进行GC的线程数，要根据cpu的核心数合理设置，一般GC属于计算密集型的操作，因此GC线程数不要设置的过大，避免线程上下文的切换。
+  对于CMSGC，还要合理设置进行并发GC的阈值（-XX:CMSInitiatingOccupancyFraction）， 该值太大，有可能会导致在并发GC的时候从新生代升级到老年代的对象过多导致老年代不够用，从而引发FULLGC， 该值太小，则GC时间太过频繁， 影响吞吐量。
+  对于G1GC，要合理设置停顿时间（XX:MaxGCPauseMillis ）以及调整Region（‐XX:G1HeapRegionSize）的大小，不要手动设置新生代的大小， 手动设置的新生代大小会覆盖停顿时间参数
