@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="449477d3-19ff-4bee-9903-30b979f7fb63" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/java/HttpClientDemo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/java/OKhttp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/java/simulate/SimulateApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/java/simulate/filter/HeaderHttpRequestFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/java/simulate/filter/HeaderHttpResponseFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/java/simulate/inbound/HttpInboundHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/java/simulate/inbound/HttpInboundInitializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/java/simulate/inbound/HttpInboundServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/java/simulate/outbound/HttpOutboundHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../02nio/nio02/src/main/resources/log4j.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../work10jdbc/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/week5/start/AutoConfiguration.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/week5/start/ISchool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/week5/start/Klass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/week5/start/School.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/week5/start/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/spring.factories" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/applicationContext.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../02nio/nio01/src/main/java/java0/nio01/HttpServer01.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../02nio/nio01/src/main/java/java0/nio01/HttpServer01.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../02nio/nio01/src/main/java/java0/nio01/HttpServer02.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../02nio/nio01/src/main/java/java0/nio01/HttpServer02.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../02nio/nio01/src/main/java/java0/nio01/HttpServer03.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../02nio/nio01/src/main/java/java0/nio01/HttpServer03.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../spring01/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../spring01/pom.xml" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="spring-beans.schema" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="D:\maven\rep" />
+        <option name="userSettingsFile" value="D:\maven\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1om3gAch7vakVtOj7CivB0t8OHD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../springboot01" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+  </component>
+  <component name="RebelAgentSelection">
+    <selection>jr</selection>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Java\JavaCourseCodes\JavaCourseCodes\04fx\work10start\src\main\resources" />
+      <recent name="E:\Java\JavaCourseCodes\JavaCourseCodes\04fx\work10start\src\main\java" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="449477d3-19ff-4bee-9903-30b979f7fb63" name="Default Changelist" comment="" />
+      <created>1613878046665</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1613878046665</updated>
+      <workItem from="1613878049800" duration="4750000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

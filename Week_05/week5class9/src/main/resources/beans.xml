@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="Anne" class="week5.beanconfig.beans.Student">
+        <constructor-arg index="0" value="Anne"/>
+    </bean>
+
+    <bean id="Bob" class="week5.beanconfig.beans.Student">
+        <constructor-arg index="0" value="Bob"/>
+    </bean>
+
+    <bean id="klass" class="week5.beanconfig.beans.Klass" scope="prototype">
+        <property name="students">
+            <list>
+                <ref bean="Anne"/>
+                <ref bean="Bob"/>
+            </list>
+        </property>
+    </bean>
+</beans>
